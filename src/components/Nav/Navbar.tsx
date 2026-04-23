@@ -19,11 +19,8 @@ const Navbar = () => {
         </span>
       </div>
       <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-        <button className="hidden sm:inline text-sm text-gray-500 hover:text-black transition-colors">
+        <button className="text-sm text-gray-500 hover:text-black transition-colors">
           Buscar
-        </button>
-        <button className="text-sm font-semibold bg-black text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
-          Carrito (0)
         </button>
       </div>
     </nav>
