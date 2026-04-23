@@ -27,20 +27,12 @@ export default function ProductCard({ product }: Props) {
           </span>
         )}
 
-        {/* Color blocks as placeholder for real images */}
-        <div className="w-full h-full relative overflow-hidden">
-          <div
-            className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
-            style={{
-              background: `radial-gradient(ellipse at 40% 40%, ${product.colors[0]}, ${product.colors[1] ?? product.colors[0]})`,
-            }}
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-4xl font-black text-white/20 text-center px-4 leading-none uppercase tracking-tight">
-              {product.name}
-            </span>
-          </div>
-        </div>
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+        />
+
 
         {/* Wishlist button */}
         <button className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-2 shadow-sm">

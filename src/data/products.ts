@@ -10,6 +10,7 @@ export interface Product {
   badgeColor?: "red" | "blue" | "green";
   flavors?: string[];
   description: string;
+  image: string;
 }
 
 export const products: Product[] = [
@@ -23,6 +24,7 @@ export const products: Product[] = [
     description:
       "El gel más avanzado del mercado. Hidrogel que reduce el malestar estomacal. 40g de carbohidratos por gel.",
     flavors: ["Original"],
+    image: "/maurte_160.png",
   },
   {
     id: 2,
@@ -36,6 +38,7 @@ export const products: Product[] = [
     description:
       "Igual que el 160 pero con 100mg de cafeína para un boost extra en los últimos kilómetros.",
     flavors: ["Original"],
+    image: "/maurten_caf.png",
   },
   {
     id: 3,
@@ -50,6 +53,7 @@ export const products: Product[] = [
     description:
       "Todo lo que necesitas en una sola mezcla: carbohidratos, electrolitos y calorías. Sin malestar estomacal.",
     flavors: ["Limón", "Naranja", "Fresa", "Neutro", "Matcha"],
+    image: "/tailwind.png",
   },
   {
     id: 4,
@@ -63,6 +67,7 @@ export const products: Product[] = [
     description:
       "Carbohidratos de fácil digestión para esfuerzos de alta intensidad. Sin sabor artificial.",
     flavors: ["Neutro", "Limón"],
+    image: "/tailwind.png",
   },
   {
     id: 5,
@@ -76,6 +81,7 @@ export const products: Product[] = [
     description:
       "Shot concentrado de remolacha con 400mg de nitrato. Mejora el VO2 max y la resistencia.",
     flavors: ["Remolacha", "Remolacha + Jengibre"],
+    image: "/beet_it.png",
   },
   {
     id: 6,
@@ -89,5 +95,6 @@ export const products: Product[] = [
     description:
       "Detiene los calambres en 35 segundos. 100% natural, probado científicamente. Sin agua extra necesaria.",
     flavors: ["Original"],
+    image: "/pickle.png",
   },
 ];
