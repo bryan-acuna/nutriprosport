@@ -17,9 +17,6 @@
     "jsx": "react-jsx",
 
     // Import Aliasing
-    "paths": {
-      "@/*": ["./src/*"]
-    },
 
     /* Linting */
     "noUnusedLocals": true,

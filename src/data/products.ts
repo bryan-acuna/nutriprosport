@@ -97,4 +97,18 @@ export const products: Product[] = [
     flavors: ["Original"],
     image: "/pickle.png",
   },
+  {
+    id: 7,
+    name: "LMNT Electrolyte",
+    subtitle: "Mezcla de electrolitos sin azúcar",
+    category: "Hidratación",
+    price: 1.95,
+    colors: ["#f5a5a0", "#e07a75", "#ffe2de"],
+    badge: "Sin azúcar",
+    badgeColor: "green",
+    description:
+      "1000mg de sodio, 200mg de potasio y 60mg de magnesio por sobre. Sin azúcar, sin gluten, sin colorantes artificiales.",
+    flavors: ["Citrus", "Sandía", "Frambuesa", "Mango Chili", "Piña Coco"],
+    image: "/lmnt.png",
+  },
 ];

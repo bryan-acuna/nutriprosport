@@ -1,0 +1,105 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Maurten Gel 160",
+      "subtitle": "Gel energético de hidrogel",
+      "category": "Geles",
+      "price": 6,
+      "description": "El gel más avanzado del mercado. Hidrogel que reduce el malestar estomacal. 40g de carbohidratos por gel.",
+      "flavors": ["Original"],
+      "image": "/maurte_160.png"
+    },
+    {
+      "id": 2,
+      "name": "Maurten Gel 160 (12 unidades)",
+      "subtitle": "Gel energético de hidrogel",
+      "category": "Geles",
+      "price": 65,
+      "description": "El gel más avanzado del mercado. Hidrogel que reduce el malestar estomacal. 40g de carbohidratos por gel.",
+      "flavors": ["Original"],
+      "image": "/maurte_160.png"
+    },
+    {
+      "id": 3,
+      "name": "Maurten Gel 100 Caf 100",
+      "subtitle": "Gel energético con 100mg de cafeína",
+      "category": "Geles",
+      "price": 5.5,
+      "description": "Igual que el 160 pero con 100mg de cafeína para un boost extra en los últimos kilómetros.",
+      "flavors": ["Original"],
+      "image": "/maurten_caf.png"
+    },
+    {
+      "id": 4,
+      "name": "Tailwind Hydration",
+      "subtitle": "Mezcla de hidratación y electrolitos",
+      "category": "Hidratación",
+      "price": 34.99,
+      "originalPrice": 39.99,
+      "description": "Todo lo que necesitas en una sola mezcla: carbohidratos, electrolitos y calorías. Sin malestar estomacal.",
+      "flavors": ["Limón", "Naranja", "Fresa", "Neutro", "Matcha"],
+      "image": "/tailwind.png"
+    },
+    {
+      "id": 5,
+      "name": "Tailwind Carb",
+      "subtitle": "Combustible de carbohidratos puro",
+      "category": "Hidratación",
+      "price": 29.99,
+      "description": "Carbohidratos de fácil digestión para esfuerzos de alta intensidad. Sin sabor artificial.",
+      "flavors": ["Neutro", "Limón"],
+      "image": "/tailwind.png"
+    },
+    {
+      "id": 6,
+      "name": "Beet It Sport",
+      "subtitle": "Shot de nitrato de remolacha",
+      "category": "Shots",
+      "price": 3.49,
+      "description": "Shot concentrado de remolacha con 400mg de nitrato. Mejora el VO2 max y la resistencia.",
+      "flavors": ["Remolacha", "Remolacha + Jengibre"],
+      "image": "/beet_it.png"
+    },
+    {
+      "id": 7,
+      "name": "Pickle Juice Extra Strength",
+      "subtitle": "Shot para calambres musculares",
+      "category": "Shots",
+      "price": 3.99,
+      "description": "Detiene los calambres en 35 segundos. 100% natural, probado científicamente. Sin agua extra necesaria.",
+      "flavors": ["Original"],
+      "image": "/pickle.png"
+    },
+    {
+      "id": 8,
+      "name": "Honey Stinger Energy Waffle Fresa",
+      "subtitle": "Waffle energético con miel orgánica",
+      "category": "Geles",
+      "price": 2.49,
+      "description": "Waffle energético ligero y fácil de digerir. Endulzado con miel orgánica para energía rápida durante el ejercicio.",
+      "flavors": ["Miel", "Fresa"],
+      "image": "/honey_waffle.png"
+    },
+    {
+      "id": 9,
+      "name": "Honey Stinger Energy Waffle Chocolate",
+      "subtitle": "Waffle energético con miel orgánica",
+      "category": "Geles",
+      "price": 2.49,
+      "description": "Waffle energético ligero y fácil de digerir. Endulzado con miel orgánica para energía rápida durante el ejercicio.",
+      "flavors": ["Miel", "Chocolate"],
+      "image": "/honey_waffle.png"
+    },
+    {
+      "id": 10,
+      "name": "LMNT Electrolyte",
+      "subtitle": "Mezcla de electrolitos sin azúcar",
+      "category": "Hidratación",
+      "price": 1.95,
+      "description": "1000mg de sodio, 200mg de potasio y 60mg de magnesio por sobre. Sin azúcar, sin gluten, sin colorantes artificiales.",
+      "flavors": ["Citrus", "Sandía", "Frambuesa", "Mango Chili", "Piña Coco"],
+      "image": "/lmnt.png"
+    }
+  ]
+}
