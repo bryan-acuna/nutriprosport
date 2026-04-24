@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { products } from "./data/products";
-import { ProductCard } from "./components/ProductCard";
-import { Navbar } from "./components/Nav";
+import { useState } from 'react';
+import { ProductCard } from './components/ProductCard';
+import { Navbar } from './components/Nav';
+import { useData } from './context';
 
-const categories = ["Todo", "Geles", "Hidratación", "Shots"];
+const categories = ['Todo', 'Geles', 'Hidratación', 'Shots'];
 
 export default function App() {
-  const [activeCategory, setActiveCategory] = useState("Todo");
+  const [activeCategory, setActiveCategory] = useState('Todo');
+  const { filteredProducts: products } = useData();
 
   const filtered =
-    activeCategory === "Todo"
+    activeCategory === 'Todo'
       ? products
       : products.filter((p) => p.category === activeCategory);
 
@@ -41,8 +42,8 @@ export default function App() {
             onClick={() => setActiveCategory(cat)}
             className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all shrink-0 ${
               activeCategory === cat
-                ? "bg-black text-white border-black"
-                : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
+                ? 'bg-black text-white border-black'
+                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'
             }`}
           >
             {cat}
