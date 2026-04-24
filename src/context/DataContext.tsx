@@ -12,13 +12,14 @@ interface DataProviderProps {
 const DataContext = createContext<DataContextI | undefined>(undefined);
 
 export const DataProvider = ({ children }: DataProviderProps) => {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
-  const searchProduct = (word: string) =>
-    setFilteredProducts(() =>
-      products.filter((product: Product) =>
-        product.name.toLowerCase().includes(word.toLowerCase())
-      )
-    );
+  const [searchWord, setSearchWord] = useState<string>('');
+  const filteredProducts = products.filter((product: Product) =>
+    product.name.toLowerCase().includes(searchWord.toLowerCase())
+  );
+
+  const searchProduct = (word: string) => {
+    setSearchWord(word);
+  };
 
   return (
     <DataContext.Provider value={{ filteredProducts, searchProduct }}>
