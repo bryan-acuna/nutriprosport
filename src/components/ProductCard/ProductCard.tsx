@@ -1,13 +1,13 @@
-import type { Product } from "@/data/products";
+import type { Product } from '@/data/products';
 
 interface Props {
   product: Product;
 }
 
 const badgeStyles: Record<string, string> = {
-  red: "bg-red-500 text-white",
-  blue: "bg-blue-600 text-white",
-  green: "bg-green-600 text-white",
+  red: 'bg-red-500 text-white',
+  blue: 'bg-blue-600 text-white',
+  green: 'bg-green-600 text-white',
 };
 
 export default function ProductCard({ product }: Props) {
@@ -21,7 +21,7 @@ export default function ProductCard({ product }: Props) {
       <div className="relative rounded-xl overflow-hidden bg-gray-100 mb-3 aspect-square flex items-center justify-center">
         {product.badge && (
           <span
-            className={`absolute top-3 left-3 text-xs font-semibold px-2 py-1 rounded-md z-10 ${badgeStyles[product.badgeColor ?? "red"]}`}
+            className={`absolute top-3 left-3 text-xs font-semibold px-2 py-1 rounded-md z-10 ${badgeStyles[product.badgeColor ?? 'red']}`}
           >
             {product.badge}
           </span>
@@ -32,7 +32,6 @@ export default function ProductCard({ product }: Props) {
           alt={product.name}
           className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
         />
-
 
         {/* Wishlist button */}
         <button className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white rounded-full p-2 shadow-sm">
@@ -47,17 +46,6 @@ export default function ProductCard({ product }: Props) {
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
           </svg>
         </button>
-      </div>
-
-      {/* Color swatches */}
-      <div className="flex gap-1.5 mb-2">
-        {product.colors.map((color, i) => (
-          <div
-            key={i}
-            className="w-3.5 h-3.5 rounded-full border border-gray-300 cursor-pointer hover:scale-110 transition-transform"
-            style={{ backgroundColor: color }}
-          />
-        ))}
       </div>
 
       {/* Info */}

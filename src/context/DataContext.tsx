@@ -15,7 +15,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const searchProduct = (word: string) =>
     setFilteredProducts(() =>
-      products.filter((product: Product) => product.name.includes(word))
+      products.filter((product: Product) =>
+        product.name.toLowerCase().includes(word.toLowerCase())
+      )
     );
 
   return (
