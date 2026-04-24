@@ -5,7 +5,7 @@ const Search = () => {
   const [search, setSearch] = useState<string>('');
   const { searchProduct } = useData();
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
     searchProduct(value);
@@ -15,7 +15,7 @@ const Search = () => {
     <div className="hidden md:flex flex-1 max-w-md mx-auto">
       <div className="relative w-full">
         <svg
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -32,7 +32,7 @@ const Search = () => {
           value={search}
           type="text"
           placeholder="Buscar productos..."
-          className="w-full pl-9 pr-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:border-gray-400 transition-colors"
+          className="w-full pl-9 pr-3 py-2 text-sm bg-gray-50 dark:bg-neutral-800 text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-gray-200 dark:border-neutral-700 rounded-full focus:outline-none focus:border-gray-400 dark:focus:border-neutral-500 transition-colors"
         />
       </div>
     </div>
