@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { type Product, products } from '../data/products';
 
 interface DataContextI {
@@ -13,13 +13,15 @@ const DataContext = createContext<DataContextI | undefined>(undefined);
 
 export const DataProvider = ({ children }: DataProviderProps) => {
   const [searchWord, setSearchWord] = useState<string>('');
-  const filteredProducts = products.filter((product: Product) =>
-    product.name.toLowerCase().includes(searchWord.toLowerCase())
+  const filteredProducts = useMemo(
+    () =>
+      products.filter((product: Product) =>
+        product.name.toLowerCase().includes(searchWord.toLowerCase())
+      ),
+    [searchWord]
   );
 
-  const searchProduct = (word: string) => {
-    setSearchWord(word);
-  };
+  const searchProduct = setSearchWord;
 
   return (
     <DataContext.Provider value={{ filteredProducts, searchProduct }}>
