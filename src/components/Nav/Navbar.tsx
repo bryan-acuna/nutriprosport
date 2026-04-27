@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Search } from '../Search';
-import { useTheme } from '../../context';
 import { Filter } from '../Filter';
 import ThemeToggle from './ThemeToggle';
 
