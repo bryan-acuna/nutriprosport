@@ -5,6 +5,9 @@ interface DataContextI {
   filteredProducts: Product[];
   searchProduct: (word: string) => void;
   setFilter: (word: string | null) => void;
+  category: string;
+  categories: string[];
+  setCategory: (word: string) => void;
 }
 
 interface DataProviderProps {
@@ -13,12 +16,24 @@ interface DataProviderProps {
 const DataContext = createContext<DataContextI | undefined>(undefined);
 
 export const DataProvider = ({ children }: DataProviderProps) => {
+  const categories = useMemo(
+    () => ['Todo', ...new Set(products.map((product) => product.category))],
+    []
+  );
   const [searchWord, setSearchWord] = useState<string>('');
+  const [category, setCategory] = useState<string>('Todo');
   const [filters, setFilter] = useState<string | null>(null);
   const filteredProducts = useMemo(() => {
-    const newProducts = products.filter((product: Product) =>
+    const categoryFilter =
+      category === 'Todo'
+        ? products
+        : products.filter((product: Product) => product.category === category);
+    console.log(category);
+    console.log(categoryFilter);
+    const newProducts = categoryFilter.filter((product: Product) =>
       product.name.toLowerCase().includes(searchWord.toLowerCase())
     );
+    console.log(newProducts);
     return newProducts.toSorted((a, b) => {
       switch (filters) {
         case 'Precio':
@@ -29,13 +44,20 @@ export const DataProvider = ({ children }: DataProviderProps) => {
           return 0;
       }
     });
-  }, [searchWord, filters]);
+  }, [searchWord, filters, category]);
 
   const searchProduct = setSearchWord;
 
   return (
     <DataContext.Provider
-      value={{ filteredProducts, searchProduct, setFilter }}
+      value={{
+        filteredProducts,
+        searchProduct,
+        setFilter,
+        setCategory,
+        category,
+        categories,
+      }}
     >
       {children}
     </DataContext.Provider>
