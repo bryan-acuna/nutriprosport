@@ -9,7 +9,13 @@ const sortOptions: string[] = ['Precio', 'Nombre'];
 
 const Filter = ({ handleFiler }: FilterI) => {
   const [sortSelected, setSortSelected] = useState<string | null>(null);
-  const { setFilter } = useData();
+  const [search, setSearch] = useState<string>('');
+  const { setFilter, searchProduct } = useData();
+
+  const handleSubmit = () => {
+    setFilter(sortSelected);
+    searchProduct(search);
+  };
 
   return (
     <div className="absolute right-0 top-full mt-2 w-72 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-xl shadow-lg p-4 z-50">
@@ -45,6 +51,8 @@ const Filter = ({ handleFiler }: FilterI) => {
           Nombre
         </label>
         <input
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
           type="text"
           placeholder="Buscar por nombre..."
           className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-neutral-800 text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-gray-200 dark:border-neutral-700 rounded-lg focus:outline-none focus:border-gray-400 dark:focus:border-neutral-500 transition-colors"
@@ -87,7 +95,7 @@ const Filter = ({ handleFiler }: FilterI) => {
 
       <div className="flex gap-2">
         <button
-          onClick={() => setFilter(sortSelected)}
+          onClick={handleSubmit}
           className="flex-1 px-3 py-2 text-sm font-semibold text-white dark:text-black bg-black dark:bg-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
         >
           Aplicar
