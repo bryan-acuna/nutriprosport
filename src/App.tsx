@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { ProductCard } from './components/ProductCard';
 import { Navbar } from './components/Nav';
 import { useData } from './context';
 import CategoryFilter from './components/CategoryFilters/CategoryFilter';
-
 export default function App() {
   const { filteredProducts } = useData();
 

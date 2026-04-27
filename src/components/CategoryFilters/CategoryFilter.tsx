@@ -1,5 +1,4 @@
 import { useData } from '@/context';
-import { useState } from 'react';
 
 const CategoryFilter = () => {
   const { category: activeCategory, categories, setCategory } = useData();

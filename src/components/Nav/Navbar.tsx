@@ -6,7 +6,6 @@ import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <nav className="relative flex items-center justify-between px-4 sm:px-8 py-4 border-b border-gray-100 dark:border-neutral-800 gap-4 bg-white dark:bg-neutral-950">
