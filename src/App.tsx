@@ -4,11 +4,9 @@ import { Navbar } from './components/Nav';
 import { useData } from './context';
 
 const categories = ['Todo', 'Geles', 'Hidratación', 'Shots'];
-const sortOptions = ['Precio', 'Nombre'];
 
 export default function App() {
   const [activeCategory, setActiveCategory] = useState('Todo');
-  const [activeSort, setActiveSort] = useState<string | null>(null);
   const { filteredProducts: products } = useData();
 
   const filtered =
