@@ -4,9 +4,11 @@ import { Navbar } from './components/Nav';
 import { useData } from './context';
 
 const categories = ['Todo', 'Geles', 'Hidratación', 'Shots'];
+const sortOptions = ['Precio', 'Nombre'];
 
 export default function App() {
   const [activeCategory, setActiveCategory] = useState('Todo');
+  const [activeSort, setActiveSort] = useState<string | null>(null);
   const { filteredProducts: products } = useData();
 
   const filtered =
@@ -35,7 +37,7 @@ export default function App() {
       </div>
 
       {/* Category filters */}
-      <div className="px-4 sm:px-8 pb-6 flex gap-2 overflow-x-auto whitespace-nowrap">
+      <div className="px-4 sm:px-8 pb-3 flex gap-2 overflow-x-auto whitespace-nowrap">
         {categories.map((cat) => (
           <button
             key={cat}
