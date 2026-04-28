@@ -6,7 +6,7 @@ interface FilterI {
   handleFiler: (close: boolean) => void;
 }
 
-const sortOptions: string[] = ['Precio', 'Nombre'];
+const sortOptions: Exclude<SortBy, null>[] = ['Precio', 'Nombre'];
 
 const Filter = ({ handleFiler }: FilterI) => {
   const [sortSelected, setSortSelected] = useState<SortBy>(null);
