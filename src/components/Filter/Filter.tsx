@@ -1,4 +1,5 @@
-import { useData } from '@/context';
+import { useData, type SortBy } from '@/context';
+
 import { useState } from 'react';
 
 interface FilterI {
@@ -8,13 +9,12 @@ interface FilterI {
 const sortOptions: string[] = ['Precio', 'Nombre'];
 
 const Filter = ({ handleFiler }: FilterI) => {
-  const [sortSelected, setSortSelected] = useState<string | null>(null);
-  const [search, setSearch] = useState<string>('');
-  const { setFilter, searchProduct } = useData();
+  const [sortSelected, setSortSelected] = useState<SortBy>(null);
+  const { searchWord, setSortBy, searchProduct } = useData();
 
   const handleSubmit = () => {
-    setFilter(sortSelected);
-    searchProduct(search);
+    setSortBy(sortSelected);
+    handleFiler(false);
   };
 
   return (
@@ -51,8 +51,8 @@ const Filter = ({ handleFiler }: FilterI) => {
           Nombre
         </label>
         <input
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
+          onChange={(e) => searchProduct(e.target.value)}
+          value={searchWord}
           type="text"
           placeholder="Buscar por nombre..."
           className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-neutral-800 text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-gray-200 dark:border-neutral-700 rounded-lg focus:outline-none focus:border-gray-400 dark:focus:border-neutral-500 transition-colors"

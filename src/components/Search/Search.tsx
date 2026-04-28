@@ -1,19 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useData } from '../../context';
-import { useDebounce } from '@/hooks';
 
 const Search = () => {
-  const [search, setSearch] = useState<string>('');
-  const { searchProduct } = useData();
-  const { search: searchTerm } = useDebounce(search);
-
-  useEffect(() => {
-    searchProduct(searchTerm);
-  }, [searchTerm, searchProduct]);
+  const { searchWord, searchProduct } = useData();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearch(value);
+    searchProduct(value);
   };
 
   return (
@@ -34,7 +26,7 @@ const Search = () => {
         </svg>
         <input
           onChange={handleSearch}
-          value={search}
+          value={searchWord}
           type="text"
           placeholder="Buscar productos..."
           className="w-full pl-9 pr-3 py-2 text-sm bg-gray-50 dark:bg-neutral-800 text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-gray-200 dark:border-neutral-700 rounded-full focus:outline-none focus:border-gray-400 dark:focus:border-neutral-500 transition-colors"

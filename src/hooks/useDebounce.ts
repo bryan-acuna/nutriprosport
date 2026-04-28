@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useDebounce = <T>(searchTerm: T, time = 3000): { search: T } => {
+export const useDebounce = <T>(searchTerm: T, time = 1000): T => {
   const [search, setSearch] = useState<T>(searchTerm);
 
   useEffect(() => {
@@ -10,5 +10,5 @@ export const useDebounce = <T>(searchTerm: T, time = 3000): { search: T } => {
 
     return () => clearTimeout(timeout);
   }, [searchTerm, time]);
-  return { search };
+  return search;
 };
