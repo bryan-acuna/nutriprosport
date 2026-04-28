@@ -1,35 +1,19 @@
-import { useState } from 'react';
-import { useData } from '../../context';
+import { Search as SearchIcon } from 'lucide-react';
+import { useData } from '@/context';
 
 const Search = () => {
-  const [search, setSearch] = useState<string>('');
-  const { searchProduct } = useData();
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearch(value);
-    searchProduct(value);
-  };
+  const { searchWord, searchProduct } = useData();
 
   return (
     <div className="hidden md:flex flex-1 max-w-md mx-auto">
       <div className="relative w-full">
-        <svg
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
+        <SearchIcon
+          size={16}
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none"
+        />
         <input
-          onChange={handleSearch}
-          value={search}
+          onChange={(e) => searchProduct(e.target.value)}
+          value={searchWord}
           type="text"
           placeholder="Buscar productos..."
           className="w-full pl-9 pr-3 py-2 text-sm bg-gray-50 dark:bg-neutral-800 text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-gray-200 dark:border-neutral-700 rounded-full focus:outline-none focus:border-gray-400 dark:focus:border-neutral-500 transition-colors"

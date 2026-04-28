@@ -1,10 +1,21 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { type Product, products } from '../data/products';
+import { useDebounce } from '@/hooks';
+
+export type SortBy = 'Precio' | 'Nombre' | null;
 
 interface DataContextI {
   filteredProducts: Product[];
+  searchWord: string;
   searchProduct: (word: string) => void;
-  setFilter: (word: string | null) => void;
+  sortBy: SortBy;
+  setSortBy: (sortBy: SortBy) => void;
   category: string;
   categories: string[];
   setCategory: (word: string) => void;
@@ -13,6 +24,7 @@ interface DataContextI {
 interface DataProviderProps {
   children: React.ReactNode;
 }
+
 const DataContext = createContext<DataContextI | undefined>(undefined);
 
 export const DataProvider = ({ children }: DataProviderProps) => {
@@ -21,21 +33,20 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     []
   );
   const [searchWord, setSearchWord] = useState<string>('');
+  const debouncedValue = useDebounce(searchWord);
   const [category, setCategory] = useState<string>('Todo');
-  const [filters, setFilter] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<SortBy>(null);
+
   const filteredProducts = useMemo(() => {
     const categoryFilter =
       category === 'Todo'
         ? products
         : products.filter((product: Product) => product.category === category);
-    console.log(category);
-    console.log(categoryFilter);
     const newProducts = categoryFilter.filter((product: Product) =>
-      product.name.toLowerCase().includes(searchWord.toLowerCase())
+      product.name.toLowerCase().includes(debouncedValue.toLowerCase())
     );
-    console.log(newProducts);
     return newProducts.toSorted((a, b) => {
-      switch (filters) {
+      switch (sortBy) {
         case 'Precio':
           return a.price - b.price;
         case 'Nombre':
@@ -44,24 +55,28 @@ export const DataProvider = ({ children }: DataProviderProps) => {
           return 0;
       }
     });
-  }, [searchWord, filters, category]);
+  }, [debouncedValue, sortBy, category]);
 
-  const searchProduct = setSearchWord;
-
-  return (
-    <DataContext.Provider
-      value={{
-        filteredProducts,
-        searchProduct,
-        setFilter,
-        setCategory,
-        category,
-        categories,
-      }}
-    >
-      {children}
-    </DataContext.Provider>
+  const searchProduct = useCallback(
+    (word: string) => setSearchWord(word),
+    []
   );
+
+  const value = useMemo(
+    () => ({
+      filteredProducts,
+      searchWord,
+      searchProduct,
+      sortBy,
+      setSortBy,
+      setCategory,
+      category,
+      categories,
+    }),
+    [filteredProducts, sortBy, category, categories, searchWord, searchProduct]
+  );
+
+  return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
 
 export const useData = () => {

@@ -1,20 +1,20 @@
-import { useData } from '@/context';
 import { useState } from 'react';
+import { ChevronDown, X } from 'lucide-react';
+import { type SortBy, useData } from '@/context';
 
 interface FilterI {
-  handleFiler: (close: boolean) => void;
+  onClose: (close: boolean) => void;
 }
 
-const sortOptions: string[] = ['Precio', 'Nombre'];
+const sortOptions: Exclude<SortBy, null>[] = ['Precio', 'Nombre'];
 
-const Filter = ({ handleFiler }: FilterI) => {
-  const [sortSelected, setSortSelected] = useState<string | null>(null);
-  const [search, setSearch] = useState<string>('');
-  const { setFilter, searchProduct } = useData();
+const Filter = ({ onClose }: FilterI) => {
+  const { setSortBy, sortBy } = useData();
+  const [sortSelected, setSortSelected] = useState<SortBy>(sortBy);
 
   const handleSubmit = () => {
-    setFilter(sortSelected);
-    searchProduct(search);
+    setSortBy(sortSelected);
+    onClose(false);
   };
 
   return (
@@ -24,49 +24,24 @@ const Filter = ({ handleFiler }: FilterI) => {
           Filtros
         </h3>
         <button
-          onClick={() => handleFiler(false)}
+          onClick={() => onClose(false)}
+          aria-label="Cerrar filtros"
           className="text-gray-400 dark:text-gray-500 hover:text-black dark:hover:text-white transition-colors"
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          <X size={16} />
         </button>
       </div>
 
       <div className="mb-4">
-        <label
-          className="block text-xs font-semibold text-gray-500
-        dark:text-gray-400 uppercase tracking-wider mb-2"
-        >
-          Nombre
-        </label>
-        <input
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
-          type="text"
-          placeholder="Buscar por nombre..."
-          className="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-neutral-800 text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border border-gray-200 dark:border-neutral-700 rounded-lg focus:outline-none focus:border-gray-400 dark:focus:border-neutral-500 transition-colors"
-        />
-      </div>
-
-      <div className="mb-4">
         <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-          Ordernar por
+          Ordenar por
         </label>
         <div className="flex gap-2">
           {sortOptions.map((option) => (
             <button
-              onClick={() => setSortSelected(option)}
+              onClick={() =>
+                setSortSelected((curr) => (curr === option ? null : option))
+              }
               key={option}
               className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-lg transition-colors border ${
                 sortSelected === option
@@ -75,19 +50,7 @@ const Filter = ({ handleFiler }: FilterI) => {
               }`}
             >
               {option}
-              <svg
-                className="w-3.5 h-3.5 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+              <ChevronDown size={14} />
             </button>
           ))}
         </div>
