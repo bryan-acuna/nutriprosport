@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useData } from '../../context';
+import { useDebounce } from '@/hooks';
 
 const Search = () => {
   const [search, setSearch] = useState<string>('');
   const { searchProduct } = useData();
+  const { search: searchTerm } = useDebounce(search);
+
+  useEffect(() => {
+    searchProduct(searchTerm);
+  }, [searchTerm, searchProduct]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-    searchProduct(value);
   };
 
   return (
