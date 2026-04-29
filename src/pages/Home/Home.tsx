@@ -1,7 +1,6 @@
 import { useData } from '@/context';
 import { useState } from 'react';
 import { AddProduct } from '../AddProduct';
-import { Navbar } from '@/components/Nav';
 import CategoryFilter from '@/components/CategoryFilters/CategoryFilter';
 import { ProductCard } from '@/components/ProductCard';
 
@@ -14,10 +13,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950 font-sans transition-colors">
-      {/* Nav */}
-      <Navbar />
-
+    <>
       {/* Page header + filters */}
       <div className="px-4 sm:px-8 pt-6 sm:pt-8 pb-4 flex items-end justify-between gap-4">
         <div>
@@ -62,7 +58,7 @@ const Home = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-    </div>
+    </>
   );
 };
 export default Home;
