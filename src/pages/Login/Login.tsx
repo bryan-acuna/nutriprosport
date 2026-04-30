@@ -1,5 +1,5 @@
 import { useAuth } from '@/context';
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const router = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -99,11 +99,16 @@ const Login = () => {
             </span>
           </label>
 
+          {error && (
+            <p className="text-sm text-red-500 font-medium">{error}</p>
+          )}
+
           <button
-            type="button"
-            className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:opacity-90 transition-opacity"
+            type="submit"
+            disabled={loading}
+            className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Iniciar sesión
+            {loading ? 'Iniciando...' : 'Iniciar sesión'}
             <svg
               className="w-4 h-4"
               fill="none"
