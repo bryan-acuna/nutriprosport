@@ -4,7 +4,7 @@ const CategoryFilter = () => {
   const { category: activeCategory, categories, setCategory } = useData();
 
   return (
-    <div className="px-4 sm:px-8 pb-3 flex gap-2 overflow-x-auto whitespace-nowrap">
+    <div className="px-4 sm:px-8 pb-3 flex gap-2 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {categories.map((cat) => (
         <button
           key={cat}

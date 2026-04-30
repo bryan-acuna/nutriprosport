@@ -1,4 +1,6 @@
 import type { Product } from '@/data/products';
+import { useFavorites } from '@/hooks';
+import { Link } from 'react-router-dom';
 
 interface Props {
   product: Product;
@@ -11,14 +13,17 @@ const badgeStyles: Record<string, string> = {
 };
 
 export default function ProductCard({ product }: Props) {
+  const { isFavorite, toggle } = useFavorites();
+  const favorited = isFavorite(product.id);
+
   const discount = product.originalPrice
     ? Math.round((1 - product.price / product.originalPrice) * 100)
     : null;
 
   return (
-    <div className="group cursor-pointer">
+    <Link to={`/product/${product.id}`} className="group cursor-pointer block">
       {/* Image area */}
-      <div className="relative rounded-xl overflow-hidden bg-gray-100 dark:bg-neutral-900 mb-3 aspect-square flex items-center justify-center">
+      <div className="relative rounded-xl overflow-hidden bg-gray-100 dark:bg-neutral-900 mb-2.5 sm:mb-3 aspect-square flex items-center justify-center">
         {product.badge && (
           <span
             className={`absolute top-3 left-3 text-xs font-semibold px-2 py-1 rounded-md z-10 ${badgeStyles[product.badgeColor ?? 'red']}`}
@@ -30,16 +35,29 @@ export default function ProductCard({ product }: Props) {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-contain p-4 sm:p-6 transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Wishlist button */}
-        <button className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-white dark:bg-neutral-800 text-black dark:text-white rounded-full p-2 shadow-sm">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggle(product.id);
+          }}
+          aria-label={favorited ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+          aria-pressed={favorited}
+          className={`absolute top-2 right-2 sm:top-3 sm:right-3 transition-all bg-white dark:bg-neutral-800 rounded-full p-2 shadow-sm ${
+            favorited
+              ? 'opacity-100 text-red-500'
+              : 'opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-black dark:text-white'
+          }`}
+        >
           <svg
             width="16"
             height="16"
             viewBox="0 0 24 24"
-            fill="none"
+            fill={favorited ? 'currentColor' : 'none'}
             stroke="currentColor"
             strokeWidth="2"
           >
@@ -80,6 +98,6 @@ export default function ProductCard({ product }: Props) {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
