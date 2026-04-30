@@ -1,4 +1,27 @@
+import { useAuth } from '@/context';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
+  const { signIn } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const { error } = await signIn(email, password);
+    if (error) {
+      setError(error);
+      setLoading(false);
+    } else {
+      router('/');
+    }
+  };
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-950 font-sans transition-colors flex items-center justify-center px-4">
       <div className="w-full max-w-md">
@@ -29,7 +52,7 @@ const Login = () => {
           </p>
         </div>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="email"
@@ -38,6 +61,8 @@ const Login = () => {
               Correo electrónico
             </label>
             <input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               id="email"
               type="email"
               placeholder="tu@email.com"
@@ -55,6 +80,8 @@ const Login = () => {
               </label>
             </div>
             <input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
               id="password"
               type="password"
               placeholder="••••••••"

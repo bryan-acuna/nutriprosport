@@ -1,17 +1,9 @@
 import { useData } from '@/context';
-import { useState } from 'react';
-import { AddProduct } from '../AddProduct';
 import CategoryFilter from '@/components/CategoryFilters/CategoryFilter';
 import { ProductCard } from '@/components/ProductCard';
 
 const Home = () => {
   const { filteredProducts } = useData();
-  const [page, setPage] = useState<'home' | 'add-product'>('home');
-
-  if (page === 'add-product') {
-    return <AddProduct onBack={() => setPage('home')} />;
-  }
-
   return (
     <>
       {/* Page header + filters */}
@@ -28,25 +20,6 @@ const Home = () => {
           <p className="text-sm text-gray-400 dark:text-gray-500 hidden sm:block">
             {filteredProducts.length} productos
           </p>
-          <button
-            onClick={() => setPage('add-product')}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:opacity-90 transition-opacity shrink-0"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            Agregar producto
-          </button>
         </div>
       </div>
 
