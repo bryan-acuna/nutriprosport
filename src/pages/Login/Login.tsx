@@ -99,9 +99,7 @@ const Login = () => {
             </span>
           </label>
 
-          {error && (
-            <p className="text-sm text-red-500 font-medium">{error}</p>
-          )}
+          {error && <p className="text-sm text-red-500 font-medium">{error}</p>}
 
           <button
             type="submit"

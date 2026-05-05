@@ -3,12 +3,14 @@ import { Search } from '../Search';
 import { Filter } from '../Filter';
 import ThemeToggle from './ThemeToggle';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const Navbar = () => {
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
   const handleProduct = () => {
-    navigate('/login');
+    navigate('/add-product');
   };
 
   return (
@@ -21,26 +23,28 @@ const Navbar = () => {
 
       <div className="flex items-center gap-1.5 sm:gap-3 shrink-0 relative">
         <ThemeToggle />
-        <button
-          onClick={handleProduct}
-          aria-label="Agregar producto"
-          className="inline-flex items-center justify-center gap-1.5 h-10 w-10 sm:w-auto sm:px-4 sm:py-2 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:opacity-90 transition-opacity shrink-0"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {user && (
+          <button
+            onClick={handleProduct}
+            aria-label="Agregar producto"
+            className="inline-flex items-center justify-center gap-1.5 h-10 w-10 sm:w-auto sm:px-4 sm:py-2 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:opacity-90 transition-opacity shrink-0"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2.5}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          <span className="hidden sm:inline">Agregar producto</span>
-        </button>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            <span className="hidden sm:inline">Agregar producto</span>
+          </button>
+        )}
         <button
           onClick={() => setFilterOpen((v) => !v)}
           aria-label="Filtros"
