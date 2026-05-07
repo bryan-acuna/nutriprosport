@@ -97,7 +97,7 @@ const Navbar = () => {
           )}
         </Link>
 
-        {filterOpen && <Filter handleFiler={setFilterOpen} />}
+        {filterOpen && <Filter onClose={setFilterOpen} />}
       </div>
     </nav>
   );
