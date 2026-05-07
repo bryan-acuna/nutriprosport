@@ -7,7 +7,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import { type Product, products } from '@/data/products';
+import { type Product } from '@/lib/api/product';
+import { useData } from './DataContext';
 
 interface CartLine {
   productId: number;
@@ -56,9 +57,16 @@ const readStorage = (): CartLine[] => {
 };
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const { products } = useData();
   const [lines, setLines] = useState<CartLine[]>(readStorage);
   const [toast, setToast] = useState<CartToastState | null>(null);
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const productsRef = useRef<Product[]>(products);
+
+  useEffect(() => {
+    productsRef.current = products;
+  }, [products]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
@@ -96,9 +104,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const update = useCallback((productId: number, qty: number) => {
     setLines((prev) => {
       if (qty <= 0) return prev.filter((l) => l.productId !== productId);
-      return prev.map((l) =>
-        l.productId === productId ? { ...l, qty } : l
-      );
+      return prev.map((l) => (l.productId === productId ? { ...l, qty } : l));
     });
   }, []);
 
@@ -125,11 +131,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         };
       })
       .filter((x): x is CartItem => x !== null);
-  }, [lines]);
+  }, [lines, products]);
 
   const count = useMemo(
-    () => items.reduce((sum, i) => sum + i.qty, 0),
-    [items]
+    () => lines.reduce((sum, i) => sum + i.qty, 0),
+    [lines]
   );
   const total = useMemo(
     () => items.reduce((sum, i) => sum + i.lineTotal, 0),

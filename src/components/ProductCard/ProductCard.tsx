@@ -1,4 +1,4 @@
-import type { Product } from '@/data/products';
+import type { Product } from '@/lib/api/product';
 import { Link } from 'react-router-dom';
 import { useFavorites } from '@/hooks';
 import { useCart } from '@/context';

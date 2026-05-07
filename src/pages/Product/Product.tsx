@@ -12,16 +12,18 @@ const badgeStyles: Record<string, string> = {
 const Product = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { filteredProducts } = useData();
+  const { products, loading } = useData();
   const { add, items, remove } = useCart();
-  const [openSection, setOpenSection] = useState<'description' | 'usage' | null>('description');
+  const [openSection, setOpenSection] = useState<
+    'description' | 'usage' | null
+  >('description');
 
   const toggle = (section: 'description' | 'usage') =>
     setOpenSection((prev) => (prev === section ? null : section));
 
   // We search the *unfiltered* set so a sorted/searched home doesn't break deep links.
   // To do that properly, expose the raw list from context too — see DataContext rev below.
-  const product = filteredProducts.find((p) => String(p.id) === id);
+  const product = products.find((p) => String(p.id) === id);
 
   if (!product) {
     return (
