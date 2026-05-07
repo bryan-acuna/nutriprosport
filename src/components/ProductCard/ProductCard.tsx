@@ -15,8 +15,9 @@ const badgeStyles: Record<string, string> = {
 
 export default function ProductCard({ product }: Props) {
   const { isFavorite, toggle } = useFavorites();
-  const { add } = useCart();
+  const { add, items, remove } = useCart();
   const fav = isFavorite(product.id);
+  const inCart = items.some((i) => i.productId === product.id);
 
   const discount = product.originalPrice
     ? Math.round((1 - product.price / product.originalPrice) * 100)
@@ -98,29 +99,77 @@ export default function ProductCard({ product }: Props) {
         </div>
       </Link>
 
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          add(product.id, 1);
-        }}
-        aria-label={`Añadir ${product.name} al carrito`}
-        className="mt-3 w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold bg-black dark:bg-white text-white dark:text-black hover:scale-105 hover:shadow-xl active:scale-95 active:shadow-inner active:bg-gray-800 dark:active:bg-gray-200 transition-all duration-150"
-      >
-        <svg
-          className="w-3.5 h-3.5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+      {inCart ? (
+        <div className="mt-3 flex gap-1.5">
+          <Link
+            to="/cart"
+            aria-label={`${product.name} está en el carrito, ver carrito`}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold bg-green-600 text-white hover:scale-105 hover:shadow-xl active:scale-95 transition-all duration-150"
+          >
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            En el carrito
+          </Link>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              remove(product.id);
+            }}
+            aria-label={`Quitar ${product.name} del carrito`}
+            title="Quitar del carrito"
+            className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-gray-300 hover:border-red-500 hover:text-red-500 active:scale-95 transition-all duration-150"
+          >
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            add(product.id, 1);
+          }}
+          aria-label={`Añadir ${product.name} al carrito`}
+          className="mt-3 w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold bg-black dark:bg-white text-white dark:text-black hover:scale-105 hover:shadow-xl active:scale-95 active:shadow-inner active:bg-gray-800 dark:active:bg-gray-200 transition-all duration-150"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2.5}
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293A1 1 0 005.414 17H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-          />
-        </svg>
-        Añadir al carrito
-      </button>
+          <svg
+            className="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293A1 1 0 005.414 17H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+            />
+          </svg>
+          Añadir al carrito
+        </button>
+      )}
     </div>
   );
 }

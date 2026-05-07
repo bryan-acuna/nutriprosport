@@ -12,7 +12,7 @@ const Product = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { filteredProducts } = useData();
-  const { add } = useCart();
+  const { add, items, remove } = useCart();
 
   // We search the *unfiltered* set so a sorted/searched home doesn't break deep links.
   // To do that properly, expose the raw list from context too — see DataContext rev below.
@@ -37,6 +37,8 @@ const Product = () => {
   const discount = product.originalPrice
     ? Math.round((1 - product.price / product.originalPrice) * 100)
     : null;
+
+  const inCart = items.some((i) => i.productId === product.id);
 
   return (
     <div className="px-4 sm:px-8 pt-4 sm:pt-8 pb-12 sm:pb-16 max-w-6xl mx-auto">
@@ -125,12 +127,55 @@ const Product = () => {
             </div>
           )}
 
-          <button
-            onClick={() => add(product.id, 1)}
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black hover:scale-105 hover:shadow-xl active:scale-95 active:shadow-inner active:bg-gray-800 dark:active:bg-gray-200 transition-all duration-150"
-          >
-            Añadir al carrito
-          </button>
+          {inCart ? (
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Link
+                to="/cart"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold bg-green-600 text-white hover:scale-105 hover:shadow-xl active:scale-95 transition-all duration-150"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                En el carrito
+              </Link>
+              <button
+                onClick={() => remove(product.id)}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-gray-300 hover:border-red-500 hover:text-red-500 active:scale-95 transition-all duration-150"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+                Quitar del carrito
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => add(product.id, 1)}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black hover:scale-105 hover:shadow-xl active:scale-95 active:shadow-inner active:bg-gray-800 dark:active:bg-gray-200 transition-all duration-150"
+            >
+              Añadir al carrito
+            </button>
+          )}
         </div>
       </div>
     </div>
