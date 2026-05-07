@@ -29,7 +29,7 @@ export const products: Product[] = [
     name: 'Maurten Gel 160 (12 unidades)',
     subtitle: 'Caja de 12 geles de hidrogel',
     category: 'Geles',
-    price: 66,
+    price: 65,
     badge: 'Ahorra',
     badgeColor: 'blue',
     description:
