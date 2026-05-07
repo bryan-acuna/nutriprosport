@@ -1,10 +1,12 @@
 import { useAuth } from '@/context';
 import { useState, type FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Login = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const next = searchParams.get('next') || '/';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,7 +28,7 @@ const Login = () => {
         setError(error);
         return;
       }
-      navigate('/');
+      navigate(next);
     } finally {
       setLoading(false);
     }

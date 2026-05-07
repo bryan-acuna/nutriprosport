@@ -1,18 +1,34 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useCart, useCheckout } from '@/context';
+import { useState } from 'react';
+import { useCart, useCheckout, useAuth } from '@/context';
 import CheckoutSteps from '../Checkout/CheckoutSteps';
 
 const Cart = () => {
   const { items, total, count, update, remove, clear } = useCart();
   const { deliveryMethod, setDeliveryMethod } = useCheckout();
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+
+  const nextPath =
+    deliveryMethod === 'shipping' ? '/checkout/address' : '/checkout/payment';
 
   const handleContinue = () => {
-    if (deliveryMethod === 'shipping') {
-      navigate('/checkout/address');
-    } else {
-      navigate('/checkout/payment');
+    if (!user) {
+      setShowAuthPrompt(true);
+      return;
     }
+    navigate(nextPath);
+  };
+
+  const continueAsGuest = () => {
+    setShowAuthPrompt(false);
+    navigate(nextPath);
+  };
+
+  const goToLogin = () => {
+    setShowAuthPrompt(false);
+    navigate(`/login?next=${encodeURIComponent(nextPath)}`);
   };
 
   if (items.length === 0) {
@@ -232,6 +248,52 @@ const Cart = () => {
           </button>
         </aside>
       </div>
+
+      {showAuthPrompt && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="auth-prompt-title"
+          className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowAuthPrompt(false)}
+        >
+          <div
+            className="w-full max-w-sm rounded-2xl bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 shadow-2xl p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2
+              id="auth-prompt-title"
+              className="text-lg font-black tracking-tight text-black dark:text-white mb-1"
+            >
+              ¿Cómo deseas continuar?
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">
+              Inicia sesión para guardar tu pedido o continúa como invitado.
+            </p>
+
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={goToLogin}
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black hover:scale-105 hover:shadow-xl active:scale-95 transition-all duration-150"
+              >
+                Iniciar sesión
+              </button>
+              <button
+                onClick={continueAsGuest}
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border border-gray-300 dark:border-neutral-700 text-black dark:text-white hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors"
+              >
+                Continuar como invitado
+              </button>
+              <button
+                onClick={() => setShowAuthPrompt(false)}
+                className="w-full px-6 py-2 text-xs text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
