@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useData } from '@/context';
 import { useCart } from '@/context';
+import { Loader } from '@/components/loader';
 
 const badgeStyles: Record<string, string> = {
   red: 'bg-red-500 text-white',
@@ -47,7 +48,11 @@ const Product = () => {
 
   const inCart = items.some((i) => i.productId === product.id);
 
-  return (
+  return loading ? (
+    <div>
+      <Loader size="lg" label="Cargando producto" />
+    </div>
+  ) : (
     <div className="px-4 sm:px-8 pt-4 sm:pt-8 pb-12 sm:pb-16 max-w-6xl mx-auto">
       <button
         onClick={() => navigate(-1)}
