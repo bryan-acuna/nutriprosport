@@ -1,20 +1,25 @@
 import { useData, type SortBy } from '@/context';
-
 import { useState } from 'react';
 
-interface FilterI {
-  handleFiler: (close: boolean) => void;
+interface FilterProps {
+  onClose: (close: boolean) => void;
 }
 
 const sortOptions: Exclude<SortBy, null>[] = ['Precio', 'Nombre'];
 
-const Filter = ({ handleFiler }: FilterI) => {
-  const [sortSelected, setSortSelected] = useState<SortBy>(null);
-  const { searchWord, setSortBy, searchProduct } = useData();
+const Filter = ({ onClose }: FilterProps) => {
+  const { searchWord, sortBy, setSortBy, searchProduct } = useData();
+  const [sortSelected, setSortSelected] = useState<SortBy>(sortBy);
 
-  const handleSubmit = () => {
+  const handleApply = () => {
     setSortBy(sortSelected);
-    handleFiler(false);
+    onClose(false);
+  };
+
+  const handleClear = () => {
+    setSortSelected(null);
+    setSortBy(null);
+    searchProduct('');
   };
 
   return (
@@ -24,7 +29,8 @@ const Filter = ({ handleFiler }: FilterI) => {
           Filtros
         </h3>
         <button
-          onClick={() => handleFiler(false)}
+          onClick={() => onClose(false)}
+          aria-label="Cerrar"
           className="text-gray-400 dark:text-gray-500 hover:text-black dark:hover:text-white transition-colors"
         >
           <svg
@@ -44,10 +50,7 @@ const Filter = ({ handleFiler }: FilterI) => {
       </div>
 
       <div className="mb-4">
-        <label
-          className="block text-xs font-semibold text-gray-500
-        dark:text-gray-400 uppercase tracking-wider mb-2"
-        >
+        <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
           Nombre
         </label>
         <input
@@ -61,7 +64,7 @@ const Filter = ({ handleFiler }: FilterI) => {
 
       <div className="mb-4">
         <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-          Ordernar por
+          Ordenar por
         </label>
         <div className="flex gap-2">
           {sortOptions.map((option) => (
@@ -75,19 +78,6 @@ const Filter = ({ handleFiler }: FilterI) => {
               }`}
             >
               {option}
-              <svg
-                className="w-3.5 h-3.5 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
             </button>
           ))}
         </div>
@@ -95,7 +85,13 @@ const Filter = ({ handleFiler }: FilterI) => {
 
       <div className="flex gap-2">
         <button
-          onClick={handleSubmit}
+          onClick={handleClear}
+          className="flex-1 px-3 py-2 text-sm font-semibold text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-neutral-700 rounded-lg hover:border-gray-400 dark:hover:border-neutral-500 transition-colors"
+        >
+          Limpiar
+        </button>
+        <button
+          onClick={handleApply}
           className="flex-1 px-3 py-2 text-sm font-semibold text-white dark:text-black bg-black dark:bg-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
         >
           Aplicar

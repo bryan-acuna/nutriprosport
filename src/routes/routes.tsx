@@ -1,6 +1,8 @@
 import { Layout } from '@/components/Layout';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { AddProduct } from '@/pages/AddProduct';
+import { Cart } from '@/pages/Cart';
+import { Address, Payment } from '@/pages/Checkout';
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
 import { Product } from '@/pages/Product';
@@ -12,6 +14,9 @@ export const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: '/product/:id', element: <Product /> },
+      { path: '/cart', element: <Cart /> },
+      { path: '/checkout/address', element: <Address /> },
+      { path: '/checkout/payment', element: <Payment /> },
       { path: '/login', element: <Login /> },
       {
         element: <ProtectedRoute />,

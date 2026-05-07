@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { products } from '@/data/products';
+import { useData } from '@/context';
+import { useCart } from '@/context';
 
 const badgeStyles: Record<string, string> = {
   red: 'bg-red-500 text-white',
@@ -10,7 +11,12 @@ const badgeStyles: Record<string, string> = {
 const Product = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const product = products.find((p) => String(p.id) === id);
+  const { filteredProducts } = useData();
+  const { add } = useCart();
+
+  // We search the *unfiltered* set so a sorted/searched home doesn't break deep links.
+  // To do that properly, expose the raw list from context too — see DataContext rev below.
+  const product = filteredProducts.find((p) => String(p.id) === id);
 
   if (!product) {
     return (
@@ -119,6 +125,12 @@ const Product = () => {
             </div>
           )}
 
+          <button
+            onClick={() => add(product.id, 1)}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold bg-black dark:bg-white text-white dark:text-black hover:scale-105 hover:shadow-xl active:scale-95 active:shadow-inner active:bg-gray-800 dark:active:bg-gray-200 transition-all duration-150"
+          >
+            Añadir al carrito
+          </button>
         </div>
       </div>
     </div>
