@@ -28,7 +28,7 @@ export default function CartToast() {
       }`}
     >
       <div className="flex items-start gap-3">
-        <div className="w-14 h-14 rounded-lg bg-gray-100 dark:bg-neutral-800 flex items-center justify-center shrink-0 overflow-hidden">
+        <div className="w-14 h-14 rounded-lg bg-white border border-gray-200 dark:border-neutral-800 flex items-center justify-center shrink-0 overflow-hidden">
           <img
             src={product.image}
             alt={product.name}

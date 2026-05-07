@@ -1,4 +1,5 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { useData } from '@/context';
 import { useCart } from '@/context';
 
@@ -13,6 +14,10 @@ const Product = () => {
   const navigate = useNavigate();
   const { filteredProducts } = useData();
   const { add, items, remove } = useCart();
+  const [openSection, setOpenSection] = useState<'description' | 'usage' | null>('description');
+
+  const toggle = (section: 'description' | 'usage') =>
+    setOpenSection((prev) => (prev === section ? null : section));
 
   // We search the *unfiltered* set so a sorted/searched home doesn't break deep links.
   // To do that properly, expose the raw list from context too — see DataContext rev below.
@@ -63,7 +68,7 @@ const Product = () => {
       </button>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
-        <div className="relative rounded-2xl overflow-hidden bg-gray-100 dark:bg-neutral-900 aspect-square flex items-center justify-center">
+        <div className="relative rounded-2xl overflow-hidden bg-white border border-gray-200 dark:border-neutral-800 aspect-square flex items-center justify-center">
           {product.badge && (
             <span
               className={`absolute top-3 left-3 sm:top-4 sm:left-4 text-xs font-semibold px-2.5 py-1 rounded-md z-10 ${badgeStyles[product.badgeColor ?? 'red']}`}
@@ -105,9 +110,111 @@ const Product = () => {
             )}
           </div>
 
-          <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300 mb-4 sm:mb-6">
-            {product.description}
-          </p>
+          <div className="mb-6 border-t border-gray-200 dark:border-neutral-800">
+            <div className="border-b border-gray-200 dark:border-neutral-800">
+              <button
+                type="button"
+                onClick={() => toggle('description')}
+                aria-expanded={openSection === 'description'}
+                className="w-full flex items-center justify-between py-4 text-left"
+              >
+                <span className="text-sm font-semibold uppercase tracking-wider text-black dark:text-white">
+                  Descripción
+                </span>
+                <svg
+                  className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                    openSection === 'description' ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+              <div
+                className={`grid transition-all duration-300 ease-out ${
+                  openSection === 'description'
+                    ? 'grid-rows-[1fr] opacity-100 pb-4'
+                    : 'grid-rows-[0fr] opacity-0'
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                    {product.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {product.usage && product.usage.length > 0 && (
+              <div className="border-b border-gray-200 dark:border-neutral-800">
+                <button
+                  type="button"
+                  onClick={() => toggle('usage')}
+                  aria-expanded={openSection === 'usage'}
+                  className="w-full flex items-center justify-between py-4 text-left"
+                >
+                  <span className="text-sm font-semibold uppercase tracking-wider text-black dark:text-white">
+                    Cómo tomarlo
+                  </span>
+                  <svg
+                    className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                      openSection === 'usage' ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  className={`grid transition-all duration-300 ease-out ${
+                    openSection === 'usage'
+                      ? 'grid-rows-[1fr] opacity-100 pb-4'
+                      : 'grid-rows-[0fr] opacity-0'
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <ul className="space-y-2">
+                      {product.usage.map((tip, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300"
+                        >
+                          <svg
+                            className="w-4 h-4 text-green-500 mt-0.5 shrink-0"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2.5}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                          <span className="leading-relaxed">{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
           {product.flavors && product.flavors.length > 0 && (
             <div className="mb-8">

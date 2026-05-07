@@ -77,7 +77,7 @@ const Cart = () => {
             >
               <Link
                 to={`/product/${item.productId}`}
-                className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-gray-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden"
+                className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-white border border-gray-200 dark:border-neutral-800 flex items-center justify-center overflow-hidden"
               >
                 <img
                   src={item.product.image}

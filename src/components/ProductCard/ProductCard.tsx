@@ -25,7 +25,7 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div className="group">
-      <div className="relative rounded-xl overflow-hidden bg-gray-100 dark:bg-neutral-900 mb-3 aspect-square flex items-center justify-center">
+      <div className="relative rounded-xl overflow-hidden bg-white border border-gray-200 dark:border-neutral-800 mb-3 aspect-square flex items-center justify-center">
         {product.badge && (
           <span
             className={`absolute top-3 left-3 text-xs font-semibold px-2 py-1 rounded-md z-10 ${badgeStyles[product.badgeColor ?? 'red']}`}
