@@ -1,10 +1,15 @@
 import { useData } from '@/context';
 import CategoryFilter from '@/components/CategoryFilters/CategoryFilter';
 import { ProductCard } from '@/components/ProductCard';
+import { Loader } from '@/components/loader';
 
 const Home = () => {
-  const { filteredProducts } = useData();
-  return (
+  const { filteredProducts, loading } = useData();
+  return loading ? (
+    <div className="px-4 sm:px-8 py-24">
+      <Loader size="lg" label="Cargando productos..." />
+    </div>
+  ) : (
     <>
       {/* Page header + filters */}
       <div className="px-4 sm:px-8 pt-5 sm:pt-8 pb-3 sm:pb-4 flex items-end justify-between gap-3">

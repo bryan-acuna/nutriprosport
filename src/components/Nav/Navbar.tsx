@@ -92,7 +92,7 @@ const Navbar = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
               />
             </svg>
             <span className="hidden sm:inline">Iniciar sesión</span>
@@ -118,7 +118,7 @@ const Navbar = () => {
             />
           </svg>
           {count > 0 && (
-            <span className="absolute -top-1 -right-1 sm:static sm:ml-1.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold">
+            <span className="absolute -top-1 -right-1 sm:static sm:ml-1.5 inline-flex items-center justify-center min-w-4.5 h-4.5 px-1 rounded-full bg-red-500 text-white text-[10px] font-bold">
               {count}
             </span>
           )}
