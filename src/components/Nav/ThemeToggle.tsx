@@ -2,41 +2,45 @@ import { useTheme } from '@/context';
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
+
   return (
     <button
       onClick={toggleTheme}
-      aria-label="Toggle theme"
-      className="flex items-center justify-center w-10 h-10 sm:w-9 sm:h-9 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors rounded-full border border-gray-200 dark:border-neutral-700 hover:border-gray-400 dark:hover:border-neutral-500"
+      role="switch"
+      aria-checked={isDark}
+      aria-label="Cambiar tema"
+      className={`relative inline-flex shrink-0 items-center w-14 h-7 rounded-full transition-colors duration-300 border ${
+        isDark
+          ? 'bg-neutral-800 border-neutral-700'
+          : 'bg-gray-200 border-gray-300'
+      }`}
     >
-      {theme === 'dark' ? (
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 3v1m0 16v1m8.66-12.66l-.71.71M4.05 19.95l-.71.71M21 12h-1M4 12H3m16.66 7.66l-.71-.71M4.05 4.05l-.71-.71M12 7a5 5 0 100 10 5 5 0 000-10z"
-          />
-        </svg>
-      ) : (
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
-          />
-        </svg>
-      )}
+      <span
+        className={`inline-flex items-center justify-center w-6 h-6 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
+          isDark ? 'translate-x-7 text-neutral-800' : 'translate-x-0.5 text-yellow-500'
+        }`}
+      >
+        {isDark ? (
+          <svg
+            className="w-3.5 h-3.5"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        ) : (
+          <svg
+            className="w-3.5 h-3.5"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0-5a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm0 18a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM4 13H3a1 1 0 110-2h1a1 1 0 110 2zm17 0h-1a1 1 0 110-2h1a1 1 0 110 2zM5.64 6.05l-.7-.7a1 1 0 011.41-1.42l.71.71A1 1 0 015.64 6.05zm12.02 12.02l-.71-.71a1 1 0 011.41-1.41l.71.7a1 1 0 01-1.41 1.42zM6.34 17.66l-.7.71A1 1 0 014.22 17l.71-.71a1 1 0 011.41 1.37zM18.36 5.64l-.71.71A1 1 0 0116.24 4.93l.71-.71a1 1 0 011.41 1.42z" />
+          </svg>
+        )}
+      </span>
     </button>
   );
 };
