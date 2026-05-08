@@ -22,9 +22,15 @@ const Product = () => {
   const toggle = (section: 'description' | 'usage') =>
     setOpenSection((prev) => (prev === section ? null : section));
 
-  // We search the *unfiltered* set so a sorted/searched home doesn't break deep links.
-  // To do that properly, expose the raw list from context too — see DataContext rev below.
   const product = products.find((p) => String(p.id) === id);
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <Loader size="lg" label="Cargando producto" />
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -48,11 +54,7 @@ const Product = () => {
 
   const inCart = items.some((i) => i.productId === product.id);
 
-  return loading ? (
-    <div>
-      <Loader size="lg" label="Cargando producto" />
-    </div>
-  ) : (
+  return (
     <div className="px-4 sm:px-8 pt-4 sm:pt-8 pb-12 sm:pb-16 max-w-6xl mx-auto">
       <button
         onClick={() => navigate(-1)}

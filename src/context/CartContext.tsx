@@ -89,7 +89,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       return [...prev, { productId, qty }];
     });
 
-    const product = products.find((p) => p.id === productId);
+    const product = productsRef.current.find((p) => p.id === productId);
     if (product) {
       if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
       setToast({ product, qty, key: Date.now() });
